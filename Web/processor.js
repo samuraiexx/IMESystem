@@ -15,8 +15,7 @@ exports.process = function(request) {
 
     var query = request["query"];
     var filter = "";
-    if("filter" in query) filter = query["filter"];
-    query = query["query"];
+    if("filter" in request) filter = request["filter"];
 
     if(query in ["alunos", "disciplinas", "notas"] && !super_user)
         return "{'valid' : 'false'}";
