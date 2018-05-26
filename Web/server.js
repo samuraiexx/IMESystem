@@ -8,7 +8,7 @@ app.use(express.json());
 app.post('/', function(request, response){
     console.log(request.body);      // your JSON
 
-    //var answer = request.body;
+    var answer = request.body;
     processor.process(request.body, function (answer) {
         console.log(answer);
         response.send(answer);
