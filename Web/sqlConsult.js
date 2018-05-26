@@ -1,9 +1,9 @@
 var fs = require('fs');
 
 class sqlConsult{
-    login(user, password, super_user) {
+    login(user, password, superUser) {
         if (user == "samuraiexx" &&
-            password == "naru10") return super_user;
+            password == "naru10") return superUser;
         return false;
     }
 
