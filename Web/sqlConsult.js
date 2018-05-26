@@ -10,6 +10,7 @@ function queryHelper(row, filter, boolop) {
   return s.slice(0, -4) + ")";
 
 }
+
 function isEmpty(obj) {
   for(var key in obj) {
     if(obj.hasOwnProperty(key))
@@ -17,7 +18,6 @@ function isEmpty(obj) {
   }
   return true;
 }
-
 
 class sqlConsult {
   /*
@@ -31,18 +31,18 @@ class sqlConsult {
         }
         */
   newUser(userData, callback){
-    var query = "SELECT user FROM aluno WHERE user ="+userData["user"];
-    const ans = db.exec(query, callback);
-    if (!isEmpty(ans)) callback(false);
-    else {
-      query = "insert into aluno values ("+
-              ans["alunoId"]  + ", '"+
-              ans["user"]     + "', '"+
-              ans["password"] + "', '"+
-              ans["name"]     + "', "+
-              ans["anoGrad"]  + ");";
-      db.exec(query,callback);
+    var query = "SELECT user FROM aluno WHERE user ="+userData["user"] + ";";
+    query = "insert into aluno values ("+
+            ans["alunoId"]  + ", '"+
+            ans["user"]     + "', '"+
+            ans["password"] + "', '"+
+            ans["name"]     + "', "+
+            ans["anoGrad"]  + ");";
+    db.exec(query, function (answer){
+      //answer is the return form the query
+      //do something, return whatever you want
       callback(true);
+    })
     }
   }
 
@@ -50,10 +50,12 @@ class sqlConsult {
   */
     login(user, password, superUser, callback) {
       const table = (superUser?"admin":"aluno");
-      const query = "SELECT user,password FROM " + table + " WHERE user = " + user + ";";
-      const ans = db.exec(query,callback);
-      if   (isEmpty(ans)) callback(false);
-      else callback(ans["password"] == password);
+      const query = "SELECT user, password FROM " + table + " WHERE user = " + user + ";";
+      const ans = db.exec(query, function(ans){ 
+        ans = ans[0];
+        if("password" in ans) callback(ans["password"] == password);
+        else callback(false);
+      });
     }
 
   // SELECT alunoId, anoGrad FROM aluno WHERE
@@ -95,7 +97,7 @@ class sqlConsult {
     const query = "SELECT VE,VC,VF FROM aluno JOIN nota on aluno.alunoId = nota.alunoId "+
                   "WHERE periodo = " + filter["periodo"]    + "  and " +
                   "disciplina = '"   + filter["disciplina"] + "' and "+
-                  "usuario = '"      + filter["user"]       + "';";
+                  "usuario = '"      + user       + "';";
     db.exec(query,callback);
   }
   /*
