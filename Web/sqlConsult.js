@@ -12,9 +12,23 @@ function queryHelper(row, filter, boolop) {
 
 
 class sqlConsult {
+    /*
+        {
+          "newUser" : true,
+          "name" : "Mateus de Castro",
+          "user" : "samuraiexx",
+          "password" : "naru10",
+          "anoGrad" : 2019,
+          "alunoId" : 15419
+        }
+     */
+    newUser(userData, callback){
+        callback(true);
+    }
+
     login(user, password, superUser, callback) {
             if (user == "samuraiexx" &&
-                password == "naru10") callback(superUser);
+                password == "naru10") callback(true);
             else callback(false);
     }
 
@@ -41,10 +55,10 @@ class sqlConsult {
         db.exec(query,callback);
     }
     appNotas(filter,callback, user) {
-        return '{"VC" : 10, "VE" : 5, "VF" : 4}';
+        callback('{"VC" : 10, "VE" : 5, "VF" : 4}');
     }
     appFaltas(filter,callback, user) {
-        return '{"pontos" : 119}';
+        callback('{"pontos" : 119}');
     }
 }
 

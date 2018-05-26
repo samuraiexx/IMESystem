@@ -2,6 +2,10 @@ var sqlConsult = require('./sqlConsult');
 
 
 exports.process = function(request, callback) {
+    if("newUser" in request && request["newUser"] == true)
+        return sqlConsult.newUser(request, callback);
+
+
     var superUser = "superUser" in request && request["superUser"] == true;
 
     sqlConsult.login(request["user"], request["password"], superUser, function (valid) {
