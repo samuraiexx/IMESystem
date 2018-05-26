@@ -1,7 +1,6 @@
 package Classes;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,14 +23,30 @@ public class Teste {
 	public static void main(String[] args) throws Exception {
 
 		AlunoRequest alreq = new AlunoRequest();
-		ArrayList<Aluno> resp = alreq.getAlunos();
+		ArrayList<Aluno> alunos = alreq.getAlunos();
+		
+		ArrayList<Integer> idsAlunos = new ArrayList<Integer>();
+		for(Aluno al : alunos)
+			idsAlunos.add(al.AlunoId);
+		
+		PeriodoAlunos pa = new PeriodoAlunos(0);
 		
 		DisciplinasRequest disreq = new DisciplinasRequest();
-		ArrayList<Disciplina> disciplinas = disreq.getDisciplinas(resp, 0);
 		
-		for(Disciplina d : disciplinas) {
+		ArrayList<Disciplina> disciplinas = disreq.getDisciplinas(pa);
+		
+		PeriodoAlunosDisciplinas pad = new PeriodoAlunosDisciplinas(idsAlunos, 0, disciplinas);
+		
+		DisciplinaNotasRequest dnr = new DisciplinaNotasRequest();
+		ArrayList<DisciplinaNotas> disciplinanotas = dnr.getDisciplinaNotas(pad);
+		
+		for(DisciplinaNotas dn : disciplinanotas) {
 			
-			System.out.println(d.getNome());
+			System.out.println(dn.nomeDisciplina + ":");
+			for(NotasDisciplina nd : dn.notasDisciplina) {
+				System.out.println(nd.nomeAluno + " tem nota = " + nd.notaAluno);
+				
+			}
 		}
 		
 	}

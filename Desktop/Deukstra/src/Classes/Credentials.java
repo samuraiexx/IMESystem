@@ -13,6 +13,13 @@ public class Credentials {
 		this.superUser = true;
 	}
 	
+	public Credentials(String u, String pass, boolean t) {
+		
+		this.user = u;
+		this.password = pass;
+		this.superUser = t;
+	}
+	
 	public String getUser() {
 		
 		return this.user;

@@ -11,16 +11,11 @@ import com.google.gson.stream.JsonReader;
 
 public class DisciplinasRequest {
 
-	public ArrayList<Disciplina> getDisciplinas(ArrayList<Aluno> alunos, int periodo) throws ClientProtocolException, IOException{
+	public ArrayList<Disciplina> getDisciplinas(PeriodoAlunos pa) throws ClientProtocolException, IOException{
 		
 		Gson gson = new Gson();
-		ArrayList<Integer> idList = new ArrayList<>();
-		for(Aluno al : alunos) {
-			
-			idList.add(al.AlunoId);
-		}
 		
-		String filter = gson.toJson(idList);
+		String filter = gson.toJson(pa);
 		JsonModelRequest jsonmodel = new JsonModelRequest(filter, "disciplinas");
 		
 		RequestSender reqSender = new RequestSender();

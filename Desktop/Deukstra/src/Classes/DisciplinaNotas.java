@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class DisciplinaNotas {
 
-	private String nomeDisciplina;
-	private ArrayList<NotasDisciplina> notasDisciplina; 
+	public String nomeDisciplina;
+	public ArrayList<NotasDisciplina> notasDisciplina; 
 	
 	public DisciplinaNotas(String nomeD, ArrayList<NotasDisciplina> notaD) {
 		

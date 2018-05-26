@@ -30,4 +30,19 @@ public class RequestSender {
 		String resp = EntityUtils.toString(entity, "UTF-8");
 		return resp;
 	}
+	
+	public String sendRequest(Credentials credential) throws ClientProtocolException, IOException {
+		
+		Gson gson = new Gson();
+		String postURL = "http://samuraiexx.ddns.net";
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost(postURL);
+		StringEntity postingString = new StringEntity(gson.toJson(credential));
+		post.setEntity(postingString);
+		post.setHeader("Content-type", "application/json");
+		HttpResponse response = httpClient.execute(post);
+		HttpEntity entity = response.getEntity();
+		String resp = EntityUtils.toString(entity, "UTF-8");
+		return resp;
+	}
 }

@@ -2,8 +2,8 @@ package Classes;
 
 public class NotasDisciplina {
 
-	private String nomeAluno;
-	private double notaAluno;
+	public String nomeAluno;
+	public double notaAluno;
 	
 	public NotasDisciplina(String nome, double nota) {
 		

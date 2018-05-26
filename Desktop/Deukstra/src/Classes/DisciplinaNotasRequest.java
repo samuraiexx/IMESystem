@@ -9,34 +9,32 @@ import org.apache.http.client.ClientProtocolException;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-public class AlunoRequest {
+public class DisciplinaNotasRequest {
+
 	
-	
-	
-	public ArrayList<Aluno> getAlunos() throws ClientProtocolException, IOException {
+	public ArrayList<DisciplinaNotas> getDisciplinaNotas(PeriodoAlunosDisciplinas pad) throws ClientProtocolException, IOException{
 		
 		Gson gson = new Gson();
-
-		JsonModelRequest jsonmodel = new JsonModelRequest("", "alunos");
 		
-		//Envia o request ao servidor e retorna o json
+		String filter = gson.toJson(pad);
+		JsonModelRequest jsonmodel = new JsonModelRequest(filter,"notas");
+		
 		RequestSender reqSender = new RequestSender();
 		String json = reqSender.sendRequest(jsonmodel);
 		
-		
-		// Montar o Arraylist com os alunos;
 		StringReader strReader = new StringReader(json);
 		JsonReader jsonReader = new JsonReader(strReader);		
-		ArrayList<Aluno> arr2 = new ArrayList<Aluno>();
+		ArrayList<DisciplinaNotas> answer = new ArrayList<>();
+		System.out.println();
 		jsonReader.beginArray();
 		
 		while(jsonReader.hasNext()) {
 			
-			Aluno al = gson.fromJson(jsonReader, Aluno.class);
-			arr2.add(al);
+			DisciplinaNotas al = gson.fromJson(jsonReader, DisciplinaNotas.class);
+			answer.add(al);
 		}
 		
-		return arr2;
+		return answer;
 		
 	}
 	
