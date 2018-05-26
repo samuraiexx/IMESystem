@@ -7,17 +7,20 @@ import java.util.ArrayList;
 import org.apache.http.client.ClientProtocolException;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 public class DisciplinasRequest {
 
 	public ArrayList<Disciplina> getDisciplinas(PeriodoAlunos pa) throws ClientProtocolException, IOException{
 		
-		Gson gson = new Gson();
+
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().serializeNulls().create();
 		
-		String filter = gson.toJson(pa);
+		Filter filter = new Filter(pa.periodo, null, null);
 		JsonModelRequest jsonmodel = new JsonModelRequest(filter, "disciplinas");
-		
+	
 		RequestSender reqSender = new RequestSender();
 		String json = reqSender.sendRequest(jsonmodel);
 	

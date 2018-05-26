@@ -56,8 +56,10 @@ public class LoginController implements Initializable{
 						}
 						
 						Scene scene = new Scene(root);
-						stage.show();
 						stage.setTitle("Pagina Inicial");
+						stage.setScene(scene);
+						stage.show();
+
 						
 						EntrarButton.getScene().getWindow().hide();
 						

@@ -16,7 +16,8 @@ public class DisciplinaNotasRequest {
 		
 		Gson gson = new Gson();
 		
-		String filter = gson.toJson(pad);
+		Filter filter = new Filter(pad.periodo, pad.disciplinas, pad.ids);
+		
 		JsonModelRequest jsonmodel = new JsonModelRequest(filter,"notas");
 		
 		RequestSender reqSender = new RequestSender();

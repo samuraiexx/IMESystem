@@ -2,7 +2,7 @@ package Classes;
 
 public class JsonModelRequest extends Credentials {
 
-	public String filter;
+	public Filter filter;
 	public String query;
 	
 	public JsonModelRequest() {
@@ -10,7 +10,7 @@ public class JsonModelRequest extends Credentials {
 		super();
 	};
 	
-	public JsonModelRequest(String f, String q) {
+	public JsonModelRequest(Filter f, String q) {
 		super();
 		this.filter = f;
 		this.query = q;

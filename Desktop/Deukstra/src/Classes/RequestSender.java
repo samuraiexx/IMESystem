@@ -13,6 +13,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
+import org.apache.commons.*;
 
 public class RequestSender {
 
@@ -22,6 +23,9 @@ public class RequestSender {
 		String postURL = "http://samuraiexx.ddns.net";
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(postURL);
+		
+		System.out.println(gson.toJson(jsonmodel));
+		
 		StringEntity postingString = new StringEntity(gson.toJson(jsonmodel));
 		post.setEntity(postingString);
 		post.setHeader("Content-type", "application/json");

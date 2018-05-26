@@ -17,7 +17,9 @@ public class AlunoRequest {
 		
 		Gson gson = new Gson();
 
-		JsonModelRequest jsonmodel = new JsonModelRequest("", "alunos");
+		Filter filter = new Filter(0, null, null);
+		
+		JsonModelRequest jsonmodel = new JsonModelRequest(filter, "alunos");
 		
 		//Envia o request ao servidor e retorna o json
 		RequestSender reqSender = new RequestSender();

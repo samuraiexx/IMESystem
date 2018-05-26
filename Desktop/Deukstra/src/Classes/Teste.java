@@ -26,16 +26,17 @@ public class Teste {
 		ArrayList<Aluno> alunos = alreq.getAlunos();
 		
 		ArrayList<Integer> idsAlunos = new ArrayList<Integer>();
-		for(Aluno al : alunos)
-			idsAlunos.add(al.AlunoId);
-		
-		PeriodoAlunos pa = new PeriodoAlunos(0);
+		for(Aluno al : alunos) {
+			System.out.println(al.alunoId);
+			idsAlunos.add(al.alunoId);
+		}
+		PeriodoAlunos pa = new PeriodoAlunos(6);
 		
 		DisciplinasRequest disreq = new DisciplinasRequest();
 		
 		ArrayList<Disciplina> disciplinas = disreq.getDisciplinas(pa);
 		
-		PeriodoAlunosDisciplinas pad = new PeriodoAlunosDisciplinas(idsAlunos, 0, disciplinas);
+		PeriodoAlunosDisciplinas pad = new PeriodoAlunosDisciplinas(idsAlunos, 6, disciplinas);
 		
 		DisciplinaNotasRequest dnr = new DisciplinaNotasRequest();
 		ArrayList<DisciplinaNotas> disciplinanotas = dnr.getDisciplinaNotas(pad);
