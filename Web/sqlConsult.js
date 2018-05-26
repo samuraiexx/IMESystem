@@ -32,17 +32,20 @@ class sqlConsult {
         */
   newUser(userData, callback){
     var query = "SELECT user FROM aluno WHERE user ="+userData["user"] + ";";
-    query = "insert into aluno values ("+
-            ans["alunoId"]  + ", '"+
-            ans["user"]     + "', '"+
-            ans["password"] + "', '"+
-            ans["name"]     + "', "+
-            ans["anoGrad"]  + ");";
-    db.exec(query, function (answer){
-      //answer is the return form the query
-      //do something, return whatever you want
-      callback(true);
-    })
+    db.exec(query, function (ans){
+      if (!isEmpty(ans)) callback(false);
+      else {
+        query = "insert into aluno values ("+
+                ans["alunoId"]  + ", '"+
+                ans["user"]     + "', '"+
+                ans["password"] + "', '"+
+                ans["name"]     + "', "+
+                ans["anoGrad"]  + ");";
+        var smthng;
+        db.exec(query,smthng);
+        callback(true);
+      }
+    )
     }
   }
 
@@ -51,7 +54,7 @@ class sqlConsult {
     login(user, password, superUser, callback) {
       const table = (superUser?"admin":"aluno");
       const query = "SELECT user, password FROM " + table + " WHERE user = " + user + ";";
-      const ans = db.exec(query, function(ans){ 
+      const ans = db.exec(query, function(ans){
         ans = ans[0];
         if("password" in ans) callback(ans["password"] == password);
         else callback(false);
