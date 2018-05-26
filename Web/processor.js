@@ -1,21 +1,21 @@
 var sqlConsult = require('./sqlConsult');
 
 
-exports.process = function(request) {
+exports.process = function(request, callback) {
     var superUser = "superUser" in request && request["superUser"] == true;
 
-    var valid = sqlConsult.login(request["user"], request["password"], superUser);
+    sqlConsult.login(request["user"], request["password"], superUser, function (valid) {
+        if (!("query" in request) || !valid)
+            return callback(valid);
+
+        var query = request["query"];
+        var filter = "";
+        if ("filter" in request) filter = request["filter"];
+
+        if (query in ["alunos", "disciplinas", "notas"] && !superUser)
+            return false;
 
 
-    if(!("query" in request) || !valid)
-        return "{'valid' : " + valid + "}";
-
-    var query = request["query"];
-    var filter = "";
-    if("filter" in request) filter = request["filter"];
-
-    if(query in ["alunos", "disciplinas", "notas"] && !superUser)
-        return "{'valid' : false}";
-
-    return sqlConsult[query](filter);
+        sqlConsult[query](filter, callback);
+    });
 };
