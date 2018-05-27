@@ -10,8 +10,8 @@ var connection = mysql.createConnection({
 exports.exec = function execQuery(query, callback){
     connection.query(query, function(err, rows, fields)
     {
-        if (err) throw err;
-        callback(JSON.parse(JSON.stringify(rows)));
+        if(err) callback(false);
+        else callback(JSON.parse(JSON.stringify(rows)));
     });
 };
 

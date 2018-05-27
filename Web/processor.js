@@ -7,8 +7,9 @@ exports.process = function(request, callback) {
 
 
     var superUser = "superUser" in request && request["superUser"] == true;
+    var user = request["user"];
 
-    sqlConsult.login(request["user"], request["password"], superUser, function (valid) {
+    sqlConsult.login(user, request["password"], superUser, function (valid) {
         if (!("query" in request) || !valid)
             return callback(valid);
 
@@ -20,6 +21,6 @@ exports.process = function(request, callback) {
             return false;
 
 
-        sqlConsult[query](filter, callback);
+        sqlConsult[query](filter, callback, user);
     });
 };
