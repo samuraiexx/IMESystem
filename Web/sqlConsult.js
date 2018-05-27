@@ -27,7 +27,7 @@ class sqlConsult {
      "anoGrad" : 2019,
      "alunoId" : 15419
      }
-   */
+     */
   newUser(userData, callback){
     var query = "insert into aluno values ("+
       userData["alunoId"]  + ", '"+
@@ -35,13 +35,13 @@ class sqlConsult {
       userData["password"] + "', '"+
       userData["name"]     + "', "+
       userData["anoGrad"]  + ");";
-    db.exec(query, function(ans) { 
-        callback(ans != false)
-        });
+    db.exec(query, function(ans) {
+      callback(ans != false)
+    });
   }
 
   /*
-   */
+  */
   login(user, password, superUser, callback) {
     var table = (superUser?"admin":"aluno");
     var query = "SELECT usuario, senha FROM " + table + " WHERE usuario = '" + user + "';";
@@ -55,7 +55,7 @@ class sqlConsult {
   // SELECT alunoId, anoGrad FROM aluno WHERE
   alunos(filter,callback) {
     const query = "SELECT alunoId,nome as nomeAluno, anoGrad FROM aluno;"
-      db.exec(query,callback);
+    db.exec(query,callback);
   }
 
   //SELECT distinct disciplina FROM (SELECT aluno.alunoId, nota.disciplina, nota.periodo FROM aluno JOIN nota on aluno.alunoId = nota.alunoId) t WHERE periodo = 6;
@@ -70,15 +70,9 @@ class sqlConsult {
   notas(filter, callback) {
     const clause = queryHelper("alunoId",filter["id"],"OR") + " AND " + queryHelper("disciplina", filter["disciplinas"],"OR") + " AND periodo = " + filter["periodo"];
     const table =  "(SELECT a.alunoId,disciplina,periodo, (VE+VC)*0.25+VF*0.5 as media FROM aluno a JOIN nota b on a.alunoId = b.alunoId order by disciplina) t"
-      const query =  "SELECT alunoId,disciplina,media FROM " +table+" WHERE " + clause + ";";
+    const query =  "SELECT alunoId,disciplina,media FROM " +table+" WHERE " + clause + ";";
+    db.exec(query,callback);
 
-    /*
-       db.exec(query, function(ans){
-       var last = "";
-       for(var  in ans)
-       callback
-       });
-     */
   }
   /*
      {
@@ -90,7 +84,7 @@ class sqlConsult {
      "disciplina" : "algelin"
      }
      }
-   */
+     */
   //SELECT VE,VC,VF FROM aluno JOIN nota ON aluno.alunoId = nota.alunoId
   //  WHERE periodo = 6 AND disciplina = 'LAB PROG II' AND usuario = 'lucbarr';
   appNotas(filter,callback, user) {
@@ -99,10 +93,10 @@ class sqlConsult {
       "disciplina = '"   + filter["disciplina"] + "' and "+
       "usuario = '"      + user       + "';";
     db.exec(query, function(ans) {
-        if(Object.keys(ans).length == 0)
+      if(Object.keys(ans).length == 0)
         callback("{ VE: -1, VC : -1, VF: -1 }");
-        else callback(ans[0]);
-        });
+      else callback(ans[0]);
+    });
   }
   /*
      {
@@ -113,16 +107,16 @@ class sqlConsult {
      "periodo" : 4
      }
      }
-   */
+     */
   //SELECT pontos FROM aluno JOIN falta ON aluno.alunoId = falta.alunoId
   //  WHERE usuario = 'samuraiexx' AND periodo = 7;
   appFaltas(filter,callback, user) {
     const query = "SELECT pontos FROM aluno JOIN falta ON aluno.alunoId = falta.alunoId WHERE "+
       "usuario = '" + user + "' AND periodo = " + filter["periodo"] + ";";
     db.exec(query, function(ans) {
-        if(Object.keys(ans).length == 0) callback("{ pontos: 0 }");
-        else callback(ans[0]);
-        });
+      if(Object.keys(ans).length == 0) callback("{ pontos: 0 }");
+      else callback(ans[0]);
+    });
   }
 }
 
