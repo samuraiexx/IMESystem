@@ -50,7 +50,7 @@ public class LoginController implements Initializable{
 						Parent root = null;
 						
 						try {
-							root = FXMLLoader.load(getClass().getResource("/Telas/PaginaInicial.fxml"));
+							root = FXMLLoader.load(getClass().getResource("/Telas/Main.fxml"));
 						} catch(Exception e) {
 							e.printStackTrace();
 						}

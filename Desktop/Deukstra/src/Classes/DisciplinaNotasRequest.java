@@ -26,7 +26,6 @@ public class DisciplinaNotasRequest {
 		StringReader strReader = new StringReader(json);
 		JsonReader jsonReader = new JsonReader(strReader);		
 		ArrayList<DisciplinaNotas> answer = new ArrayList<>();
-		System.out.println();
 		jsonReader.beginArray();
 		
 		while(jsonReader.hasNext()) {

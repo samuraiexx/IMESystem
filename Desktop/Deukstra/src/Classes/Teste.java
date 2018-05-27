@@ -34,7 +34,10 @@ public class Teste {
 		
 		DisciplinasRequest disreq = new DisciplinasRequest();
 		
-		ArrayList<Disciplina> disciplinas = disreq.getDisciplinas(pa);
+		ArrayList<Disciplina> disc = disreq.getDisciplinas(pa);
+		ArrayList<String> disciplinas = new ArrayList<>();
+		for(Disciplina d : disc)
+			disciplinas.add(d.disciplinaNome);
 		
 		PeriodoAlunosDisciplinas pad = new PeriodoAlunosDisciplinas(idsAlunos, 6, disciplinas);
 		
