@@ -17,7 +17,7 @@ exports.process = function(request, callback) {
         var filter = "";
         if ("filter" in request) filter = request["filter"];
 
-        if (query in ["alunos", "disciplinas", "notas"] && !superUser)
+        if (query in ["alunos", "notas"] && !superUser)
             return false;
 
 
