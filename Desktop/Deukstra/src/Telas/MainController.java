@@ -21,7 +21,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -31,6 +34,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 
@@ -46,8 +51,6 @@ public class MainController implements Initializable{
 	ListView<Disciplina> listDisciplinas;
 	@FXML
 	Button buscaButton;
-	@FXML
-	LineChart graficoLinha = new LineChart<>(new CategoryAxis(), new NumberAxis());
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -166,37 +169,33 @@ public class MainController implements Initializable{
 				
 				
 				PeriodoAlunosDisciplinas pad = new PeriodoAlunosDisciplinas(id, per.periodo, disc);
+				ArrayList<NotasDisciplina> notasDisciplina = new ArrayList<>();				
 				
 				DisciplinaNotasRequest disciplinaNotasRequest = new DisciplinaNotasRequest();
 				try {
-//					ArrayList<DisciplinaNotas> disciplinaNotas = disciplinaNotasRequest.getDisciplinaNotas(pad);
+					ArrayList<DisciplinaNotas> disciplinaNotas = disciplinaNotasRequest.getDisciplinaNotas(pad);
 					
-					ArrayList<NotasDisciplina> disciplinaNotas = new ArrayList<>();
-					disciplinaNotas.add(new NotasDisciplina("Fabio", 10.0));
-					disciplinaNotas.add(new NotasDisciplina("Mateus", 9.0));
-					disciplinaNotas.add(new NotasDisciplina("Luciano", 8.0));
-
+					for(DisciplinaNotas dn : disciplinaNotas) {
+						
+						System.out.println(dn.nomeDisciplina);
+						for(NotasDisciplina nd : dn.notasDisciplina) {
+							
+							notasDisciplina.add(nd);
+							System.out.println(nd.nomeAluno + " tem media " + nd.notaAluno );
+						}
+					}				
+						
+					Stage stage = new Stage();
 					
-//					LineChart graficoLinha = new LineChart<>(new CategoryAxis(), new NumberAxis());
-					XYChart.Series prod1 = new XYChart.Series<>();
-					
-//					for(DisciplinaNotas dn : disciplinaNotas) {
-						
-//						System.out.println(dn.nomeDisciplina);
-//						for(NotasDisciplina nd : dn.notasDisciplina) 
-//							prod1.getData().add(new XYChart.Data<>(nd.nomeAluno, nd.notaAluno));
-//							System.out.println(nd.nomeAluno + "tem media" + nd.notaAluno );
-						
-//					}
-					
-					for(NotasDisciplina nd : disciplinaNotas) {
-						prod1.getData().add(new XYChart.Data<>(nd.nomeAluno, nd.notaAluno));
-						
-						
-					}	
-						
-					graficoLinha.getData().addAll(prod1);
-					
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("Chart.fxml"));
+					AnchorPane anchorPane = loader.load();					
+					ChartController controller = loader.getController();
+					controller.setData(notasDisciplina);
+					System.out.println("Great!");
+					Scene scene = new Scene(anchorPane);
+					stage.setScene(scene);
+					stage.show();
+											
 					
 				} catch (Exception e) {
 					
