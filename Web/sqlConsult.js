@@ -69,9 +69,30 @@ class sqlConsult {
   // { id : [15416,15419], periodo : 6, disciplinas}
   notas(filter, callback) {
     const clause = queryHelper("alunoId",filter["id"],"OR") + " AND " + queryHelper("disciplina", filter["disciplinas"],"OR") + " AND periodo = " + filter["periodo"];
-    const table =  "(SELECT a.alunoId,disciplina,periodo, (VE+VC)*0.25+VF*0.5 as media FROM aluno a JOIN nota b on a.alunoId = b.alunoId order by disciplina) t"
-    const query =  "SELECT alunoId,disciplina,media FROM " +table+" WHERE " + clause + ";";
-    db.exec(query,callback);
+    const table =  "(SELECT nome, a.alunoId,disciplina,periodo, (VE+VC)*0.25+VF*0.5 as media FROM aluno a JOIN nota b on a.alunoId = b.alunoId) t"
+    const query =  "SELECT nome as nomeAluno, disciplina, media as notaAluno FROM " +table+" WHERE " + clause + " order by disciplina;";
+    db.exec(query, function(result) {
+        var disciplina = "";
+        var ans = [];
+        var notasDisciplina = [];
+        
+        for(var i = 0; i < result.length; i++){
+          var t = result[i];
+          if(t["disciplina"] != disciplina){
+            if(disciplina != ""){
+              ans.push({ disciplina: disciplina, notasDisciplina: notasDisciplina});
+              notasDisciplina = [];
+            }
+            disciplina = t["disciplina"];
+          }
+          var nota = {nomeAluno: t["nomeAluno"], notaAluno: t["notaAluno"]};
+          notasDisciplina.push(JSON.stringify(nota));
+        }
+        if(result.length > 0)
+          ans.push({ disciplina: disciplina, notasDisciplina: notasDisciplina});
+
+        callback(ans)
+      });
 
   }
   /*
