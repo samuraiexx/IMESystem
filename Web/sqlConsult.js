@@ -86,7 +86,7 @@ class sqlConsult {
             disciplina = t["disciplina"];
           }
           var nota = {nomeAluno: t["nomeAluno"], notaAluno: t["notaAluno"]};
-          notasDisciplina.push(JSON.stringify(nota));
+          notasDisciplina.push(nota);
         }
         if(result.length > 0)
           ans.push({ disciplina: disciplina, notasDisciplina: notasDisciplina});
