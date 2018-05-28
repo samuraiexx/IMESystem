@@ -41,8 +41,6 @@ public class LoginController implements Initializable{
 				LoginRequest lr = new LoginRequest();
 				Credentials credential = new Credentials(LoginTextField.getText(), SenhaPasswordField.getText(), true);
 				
-//				if(LoginTextField.getText().equals(credential.getUser()) &&
-//					SenhaPasswordField.getText().equals(credential.getPassword())) {
 				try {
 					if(lr.getValidUser(credential)) {
 						

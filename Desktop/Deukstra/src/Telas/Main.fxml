@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -19,13 +16,5 @@
       <ListView fx:id="listDisciplinas" layoutX="52.0" layoutY="290.0" prefHeight="132.0" prefWidth="200.0" />
       <Label layoutX="280.0" layoutY="340.0" text="Escolha a Disciplina" />
       <Button fx:id="disciplinasButton" layoutX="305.0" layoutY="253.0" mnemonicParsing="false" text="Buscar" />
-      <LineChart fx:id="graficoLineChart" layoutX="11.0" layoutY="90.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </LineChart>
    </children>
 </AnchorPane>
