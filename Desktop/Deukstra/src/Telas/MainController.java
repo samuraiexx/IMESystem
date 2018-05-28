@@ -1,11 +1,8 @@
 package Telas;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import org.apache.http.client.ClientProtocolException;
 
 import Classes.Aluno;
 import Classes.AlunoRequest;
@@ -23,7 +20,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -169,33 +165,32 @@ public class MainController implements Initializable{
 				
 				
 				PeriodoAlunosDisciplinas pad = new PeriodoAlunosDisciplinas(id, per.periodo, disc);
-				ArrayList<NotasDisciplina> notasDisciplina = new ArrayList<>();				
 				
 				DisciplinaNotasRequest disciplinaNotasRequest = new DisciplinaNotasRequest();
 				try {
 					ArrayList<DisciplinaNotas> disciplinaNotas = disciplinaNotasRequest.getDisciplinaNotas(pad);
+					CategoryAxis xAxis = new CategoryAxis();
+					NumberAxis yAxis = new NumberAxis();
+					LineChart<String, Number> graficoLineChart = new LineChart<>(xAxis, yAxis);
 					
 					for(DisciplinaNotas dn : disciplinaNotas) {
 						
-						System.out.println(dn.nomeDisciplina);
+//						System.out.println(dn.nomeDisciplina);
+						XYChart.Series series = new XYChart.Series<>();
+						series.setName(dn.nomeDisciplina);
 						for(NotasDisciplina nd : dn.notasDisciplina) {
 							
-							notasDisciplina.add(nd);
-							System.out.println(nd.nomeAluno + " tem media " + nd.notaAluno );
+							series.getData().add(new XYChart.Data<>(nd.nomeAluno, nd.notaAluno));							
+							
 						}
+						graficoLineChart.getData().add(series);
 					}				
 						
-					Stage stage = new Stage();
-					
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("Chart.fxml"));
-					AnchorPane anchorPane = loader.load();					
-					ChartController controller = loader.getController();
-					controller.setData(notasDisciplina);
-					System.out.println("Great!");
-					Scene scene = new Scene(anchorPane);
+					Stage stage = new Stage();														
+					Scene scene = new Scene(graficoLineChart);
 					stage.setScene(scene);
 					stage.show();
-											
+					
 					
 				} catch (Exception e) {
 					
