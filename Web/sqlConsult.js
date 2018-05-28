@@ -80,7 +80,7 @@ class sqlConsult {
           var t = result[i];
           if(t["disciplina"] != disciplina){
             if(disciplina != ""){
-              ans.push({ disciplina: disciplina, notasDisciplina: notasDisciplina});
+              ans.push({ nomeDisciplina: disciplina, notasDisciplina: notasDisciplina});
               notasDisciplina = [];
             }
             disciplina = t["disciplina"];
@@ -89,7 +89,7 @@ class sqlConsult {
           notasDisciplina.push(nota);
         }
         if(result.length > 0)
-          ans.push({ disciplina: disciplina, notasDisciplina: notasDisciplina});
+          ans.push({ nomeDisciplina: disciplina, notasDisciplina: notasDisciplina});
 
         callback(ans)
       });
