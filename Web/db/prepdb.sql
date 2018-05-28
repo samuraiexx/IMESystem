@@ -1,8 +1,8 @@
 CREATE TABLE `dummy`.`aluno` (
-  `alunoId` INT NOT NULL,
-   `usuario` VARCHAR(45) NULL,
-  `senha` VARCHAR(255) NULL,
-   `nome` VARCHAR(45) NULL,
+  `alunoId` INT NOT NULL UNIQUE,
+   `usuario` VARCHAR(45) NOT NULL UNIQUE,
+  `senha` VARCHAR(255) NOT NULL,
+   `nome` VARCHAR(45) NOT NULL,
   `anoGrad` SMALLINT NULL,
    PRIMARY KEY (`alunoId`));
 
