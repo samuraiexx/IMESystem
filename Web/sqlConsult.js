@@ -46,10 +46,10 @@ class sqlConsult {
     var table = (superUser?"admin":"aluno");
     var query = "SELECT usuario, senha FROM " + table + " WHERE usuario = '" + user + "';";
     db.exec(query, function(ans){
-        ans = ans[0];
-        if("senha" in ans) callback(ans["senha"] == password);
-        else callback(false);
-        });
+      if(ans.length && "senha" in ans[0])
+        callback(ans[0]["senha"] == password);
+      else callback(false);
+    });
   }
 
   // SELECT alunoId, anoGrad FROM aluno WHERE
